@@ -159,7 +159,7 @@ if __name__ == "__main__":
             "jca.json":"Samples/templates/(JCA) model-joint-controllership-agreement.pdf",
             "c2c.json":"Samples/templates/(C2C) 2-Controller-to-controller-data-privacy-addendum.pdf",
             "scc.json":"Samples/templates/standard-contractual-clauses.pdf",
-            "subprocessor.json":"Samples/templates/(Subprocessing Contract) Personal-Data-Sub-Processor-Agreement-2024-01-24.pdf"
+            "subprocessing.json":"Samples/templates/(Subprocessing Contract) Personal-Data-Sub-Processor-Agreement-2024-01-24.pdf"
         }
         
         for key, value in TEMPLATE_MAP.items():

@@ -9,11 +9,11 @@ import scraping,notification
 
 
 def run_scheduler():
-    #schedule.every().day.at("00:00").do(scraping.call_scrape_function)
-    schedule.every(1).minute.do(scraping.call_scrape_funtion)
+    schedule.every().day.at("00:00").do(scraping.call_scrape_function)
+    # schedule.every(1).minute.do(scraping.call_scrape_funtion)
     while True:
         schedule.run_pending()
-        time.sleep(5)  # check every 60 seconds
+        time.sleep(5)  
 
 
 # Start scheduler in background thread so Streamlit doesn’t block
@@ -86,4 +86,4 @@ if __name__ == "__main__":
     except Exception as e:
         print("Error Occured in document comparision", e)
         notification.send_notification("Error Occured in document comparision", f"Error is {e}")
-        notification.slack_notification(f"Error Occured in document comparision, Error is {e}")
+        # notification.slack_notification(f"Error Occured in document comparision, Error is {e}")

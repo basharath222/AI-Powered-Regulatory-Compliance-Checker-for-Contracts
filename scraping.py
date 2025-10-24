@@ -17,7 +17,7 @@ def scrape_data(url, name):
         notification.send_notification("Failed to Download File", f"Response status is {response.status_code} and Download Link is {url} \n Error is {response.text}")
         notification.slack_notification(f"Failed to Download File, Response status is {response.status_code} and Download Link is {url} \n Error is {response.text}")
     
-def call_scrape_funtion():
+def call_scrape_function():
     
     try:
     # nested dict 
@@ -27,7 +27,7 @@ def call_scrape_funtion():
             "C2C":{"json_file":"jsonFiles/c2c.json", "link":r"https://www.fcmtravel.com/sites/default/files/2020-03/2-Controller-to-controller-data-privacy-addendum.pdf"}  ,  
             "JCA":{"json_file":"jsonFiles/jca.json", "link":r"https://www.surf.nl/files/2019-11/model-joint-controllership-agreement.pdf"},
             "SCC":{"json_file":"jsonFiles/scc.json", "link":r"https://www.thomsonreuters.com/content/dam/ewp-m/documents/thomsonreuters/en/pdf/global-sourcing-procurement/eu-eea-standard-contractual-clauses-v09-2021.pdf"},
-            "Subprocessor":{"json_file":"jsonFiles/subprocessor.json", "link":r"https://greaterthan.eu/wp-content/uploads/Personal-Data-Sub-Processor-Agreement-2024-01-24.pdf"}
+            "Subprocessor":{"json_file":"jsonFiles/subprocessing.json", "link":r"https://greaterthan.eu/wp-content/uploads/Personal-Data-Sub-Processor-Agreement-2024-01-24.pdf"}
         
         }
         
@@ -43,6 +43,6 @@ def call_scrape_funtion():
                 json.dump(clauses, f, indent=2, ensure_ascii=False)
     except Exception as e:
         print("Error Occured in Scraping", e)
-        notification.send_notification("Error Occured in Scraping",f"Error is {e}")
+        # notification.send_notification("Error Occured in Scraping",f"Error is {e}")
         notification.slack_notification(f"Error Occured in Scraping, Error is {e}")
 # call_scrape_funtion()
