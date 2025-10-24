@@ -9,8 +9,8 @@ import scraping,notification
 
 
 def run_scheduler():
-    # schedule.every().day.at("00:00").do(scraping.call_scrape_function)
-    schedule.every(1).minute.do(scraping.call_scrape_function)
+    schedule.every().day.at("00:00").do(scraping.call_scrape_function)
+    # schedule.every(1).minute.do(scraping.call_scrape_function)
     while True:
         schedule.run_pending()
         time.sleep(5)  
