@@ -11,7 +11,7 @@ def scrape_data(url, name):
             for chunck in response.iter_content(chunk_size=1024):
                 if chunck:
                     f.write(chunck)
-        print("Download Successful")
+        print(name," Download Successful")
     else:
         print("failed to download", response.status_code)
         notification.send_notification("Failed to Download File", f"Response status is {response.status_code} and Download Link is {url} \n Error is {response.text}")
@@ -26,7 +26,7 @@ def call_scrape_function():
             "DPA": {"json_file":"jsonFiles/dpa.json", "link":r"https://www.benchmarkone.com/wp-content/uploads/2018/05/GDPR-Sample-Agreement.pdf"},
             "C2C":{"json_file":"jsonFiles/c2c.json", "link":r"https://www.fcmtravel.com/sites/default/files/2020-03/2-Controller-to-controller-data-privacy-addendum.pdf"}  ,  
             "JCA":{"json_file":"jsonFiles/jca.json", "link":r"https://www.surf.nl/files/2019-11/model-joint-controllership-agreement.pdf"},
-            "SCC":{"json_file":"jsonFiles/scc.json", "link":r"https://www.thomsonreuters.com/content/dam/ewp-m/documents/thomsonreuters/en/pdf/global-sourcing-procurement/eu-eea-standard-contractual-clauses-v09-2021.pdf"},
+            "SCC":{"json_file":"jsonFiles/scc.json", "link":r"https://www.miller-insurance.com/assets/PDF-Downloads/Standard-Contractual-Clauses-SCCs.pdf"},
             "Subprocessor":{"json_file":"jsonFiles/subprocessing.json", "link":r"https://greaterthan.eu/wp-content/uploads/Personal-Data-Sub-Processor-Agreement-2024-01-24.pdf"}
         
         }
