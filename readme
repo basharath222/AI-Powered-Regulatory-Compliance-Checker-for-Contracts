@@ -1,0 +1,6 @@
+Step 1 -> Upload the pdf document with clauses
+Step 2 -> Clauses Extraction
+Step 3 -> Aggrement Comparision
+Step 4 -> Displaying Comparision Results, Risk Score, Missing Clauses, Recommendations
+Step 5 -> Sending Notification Via Mail
+Step 6 -> If Error Occurs Message will Send to the team
