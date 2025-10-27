@@ -40,5 +40,3 @@ def slack_notification(message):
         requests.post(webhook_url, json=message)
     except Exception as e:
         print("Error Occured in Slack Notification", e)
-
-slack_notification("Test Slack Notification from Contract Compliance Bot")
