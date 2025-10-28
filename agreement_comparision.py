@@ -77,7 +77,7 @@ def document_type(file):
 
 def compare_agreements(unseen_data, template_data):
     
-    client = genai.Client(api_key=os.getenv("gemini_api_Key"))
+    client = genai.Client(api_key=os.getenv("gemini_api_key2"))
     
     
     prompt=f"""
