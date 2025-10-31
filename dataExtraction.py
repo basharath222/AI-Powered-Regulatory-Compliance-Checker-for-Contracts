@@ -12,66 +12,89 @@ load_dotenv()
 
 # ********   Phase 1    ******** #
 def Clause_extraction(file):
-    print("inside clause extraction")
-    class ClauseExtraction(BaseModel):
-        clause_id: str
-        heading: str
-        text: str
-    
-    text=""
-    with open(file, "rb") as file:
-        reader = PyPDF2.PdfReader(file)
-        for page in reader.pages:
-            text += page.extract_text()
-         
-    client = genai.Client(api_key=os.getenv("gemini_api_key"))
 
-  
-    prompt = f"""
-    you are an expert in legal contract analysis.
-    Your task is to extract all **clauses** from the following contract text.
-    
-    ### Guidelines:
-    - A clause may begin with:
-    - A number/letter (e.g. "1.", "A."),
-    - The word "Clause" followed by a number (e.g. "Clause 1", "Clause 5"), OR
-    - An ALL CAPS heading (e.g. "DEFINATION", "TRANSFER OF DATA".)
-    
-    -Each extracted clause must include:
-    -**clause_id** (the exact numbering/label from the contract e.g. "1.", "A.", "Clause 1", "EXHIBIT A" etc)
-    -**heading/title** (use the explicit heading if present; if absent, use the first few words of the clause as a makeshift title)
-    -**full text** (the complete text of the clause, including any sub-clauses, preserving legal wording exactly as in the contract)
-    
-    -Maintain clause boundaries percisly. do not merge multiple clauses into one.
-    -Include clauses from exhibits, appendices, and annexes if present.
-    -Do not omit any content unless it is clearly not-contractual (e.g. page numbers, headers, footers, blank sihnature lines).
-    -response in **valid json** only (no explanation, no notes, no extra text).
-    
-    Input: {text}
-    
-    Response in this JSON Structure:
-    [
-        {{
-            "clause_id": "<clause_id>",
-            "heading/title": "<heading_or_title>",
-            "full text": "<full_text_of_clause>"
-        }},
-        ...
-    ]
-    """
-    response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
-                response_mime_type="application/json",
-                response_schema=list[ClauseExtraction],
-            ),
+    try:
+        print("inside clause extraction")
+        class ClauseExtraction(BaseModel):
+            clause_id: str
+            heading: str
+            text: str
+        
+        text=""
+        with open(file, "rb") as file:
+            reader = PyPDF2.PdfReader(file)
+            for page in reader.pages:
+                text += page.extract_text()
             
-        )
-    response= response.text
+        client = genai.Client(api_key=os.getenv("gemini_api_key"))
+
     
-    return response
+        prompt = f"""
+        you are an expert in legal contract analysis.
+        Your task is to extract all **clauses** from the following contract text.
+        
+        ### Guidelines:
+        - A clause may begin with:
+        - A number/letter (e.g. "1.", "A."),
+        - The word "Clause" followed by a number (e.g. "Clause 1", "Clause 5"), OR
+        - An ALL CAPS heading (e.g. "DEFINATION", "TRANSFER OF DATA".)
+        
+        -Each extracted clause must include:
+        -**clause_id** (the exact numbering/label from the contract e.g. "1.", "A.", "Clause 1", "EXHIBIT A" etc)
+        -**heading/title** (use the explicit heading if present; if absent, use the first few words of the clause as a makeshift title)
+        -**full text** (the complete text of the clause, including any sub-clauses, preserving legal wording exactly as in the contract)
+        
+        -Maintain clause boundaries percisly. do not merge multiple clauses into one.
+        -Include clauses from exhibits, appendices, and annexes if present.
+        -Do not omit any content unless it is clearly not-contractual (e.g. page numbers, headers, footers, blank sihnature lines).
+        -response in **valid json** only (no explanation, no notes, no extra text).
+        
+        Input: {text}
+        
+        Response in this JSON Structure:
+        [
+            {{
+                "clause_id": "<clause_id>",
+                "heading/title": "<heading_or_title>",
+                "full text": "<full_text_of_clause>"
+            }},
+            ...
+        ]
+        """
+        
+        response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    thinking_config=types.ThinkingConfig(thinking_budget=0),  # Disables thinking
+                    response_mime_type="application/json",
+                    response_schema=list[ClauseExtraction],
+                ),
+                
+            )
+        response= response.text
+        
+        return response
+    
+    except Exception as e:
+        print("here for groq api call")
+        client_groq = Groq(
+            api_key=os.environ.get("groq_api_key"),
+        )
+        chat_completion = client_groq.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+                ],
+                model="llama-3.3-70b-versatile",
+        )
+        print(chat_completion.choices[0].message.content)
+        response=chat_completion.choices[0].message.content
+    
+        return response
+
 
 
 def Clause_extraction_with_summarization(file, agreement_type=None):
