@@ -105,7 +105,7 @@ if __name__ == "__main__":
                             
                         \n Comparison Result: {result}"""
                     notification.send_notification("Comparison Result", body)
-
+                    notification.slack_notification(f"Comparison Result: {result}")
                 else:
                     st.error(f"No template found for detected type: {agreement_type}")
     except Exception as e:
