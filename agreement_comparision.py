@@ -88,7 +88,7 @@ def document_type(file):
                     "content": prompt,
                 }
                 ],
-                model="openai/gpt-oss-120b",
+                model="llama-3.3-70b-versatile",
         )
         print(chat_completion.choices[0].message.content)
         data=chat_completion.choices[0].message.content
@@ -170,7 +170,7 @@ def compare_agreements(unseen_data, template_data):
                     "content": prompt,
                 }
                 ],
-                model="openai/gpt-oss-120b",
+                model="llama-3.3-70b-versatile",
         )
         # print(chat_completion.choices[0].message.content)
         response=chat_completion.choices[0].message.content
