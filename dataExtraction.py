@@ -88,7 +88,7 @@ def Clause_extraction(file):
                     "content": prompt,
                 }
                 ],
-                model="llama-3.1-70b-versatile",
+                model="llama-3.3-70b-specdec",
         )
         print(chat_completion.choices[0].message.content)
         response=chat_completion.choices[0].message.content
