@@ -88,7 +88,7 @@ def document_type(file):
                     "content": prompt,
                 }
                 ],
-                model="llama-3.3-70b-specdec",
+                model="llama-3.1-8b-instant",
         )
         print(chat_completion.choices[0].message.content)
         data=chat_completion.choices[0].message.content
@@ -170,7 +170,7 @@ def compare_agreements(unseen_data, template_data):
                     "content": prompt,
                 }
                 ],
-                model="llama-3.3-70b-specdec",
+                model="llama-3.1-8b-instant",
         )
         # print(chat_completion.choices[0].message.content)
         response=chat_completion.choices[0].message.content
